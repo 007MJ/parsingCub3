@@ -20,6 +20,8 @@ bool valide(char *file)
     // wallscolors(map);
     map = getmap(load_files);
     r_map = removenewline(map);
+    //  for (int i = 0; r_map[i]!= NULL; i++)
+    //     printf("%s", r_map[i]);
     error_map(r_map);
     return (true);  
 }

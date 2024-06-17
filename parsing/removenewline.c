@@ -61,12 +61,12 @@ char    **removenewline(char **map)
 
     end = end_remove_newline(map);
     start = len_remove_newline(map);
-    r_size = (end - start) + 1;
+    r_size = (end - start) + 2;
     y = 0;
     new = malloc(sizeof(char **) * (r_size));
     if (!new)
         return (NULL);
-    while (map[start] != NULL && start < end)
+    while (map[start] != NULL && start <= end)
     {
         new[y] = map[start];
         y ++;
