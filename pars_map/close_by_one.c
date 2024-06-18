@@ -2,31 +2,28 @@
 
 bool    direction_y(char **map, int pos_x, int pos_y, int max_x)
 {
-    int max_y;
-    int i;
+    int     max_y;
+    bool    track;
 
-    max_y = size_len(map);
-    // printf("[pos_x %d] - | - [pos_y %d] - |- [max_x %d] - | - [max_y %d] \n", pos_x, pos_y, max_x , max_y);
-    i = 0;
-    printf(" current pos [%c]\n", map[pos_y][pos_x]);
+    max_y = size_len(map) - 1;
+    track = true;
+    if (pos_x == 0 ||  pos_x == max_x || pos_y == 0 || pos_y == max_y)
+        return (err("Error\nMap is not close axe y : "), err(map[pos_y]), false);
     if (pos_x > 0 && pos_x < max_x && pos_y > 0 && pos_y < max_y)
     {
         pos_y--;
-        printf("move <- [%c]\n", map[pos_y][pos_x]);
-        looking_for_six("NSWE10 \n", map[pos_y][pos_x]);
+        track = looking_for_six("NSWE10", map[pos_y][pos_x]);
         pos_y++;
     }
-    if (pos_x > 0 && pos_x < max_x && pos_y > 0 && pos_y < max_y)
+    pos_y++;
+    if (pos_x > 0 && pos_x < max_x && pos_y > 0 && pos_y <= max_y && track == true)
     {
-        // pos_y++;
-        
-        printf("map[%d][%d]\n", pos_y, pos_x);
-        printf("move <- [%c]\n", map[pos_y][pos_x]);
-        if (pos_y > 0 && pos_y < max_y)
-            looking_for_six("NSWE10 \n", map[pos_y][pos_x]);
-        pos_y--;
+         track  = looking_for_six("NSWE10", map[pos_y][pos_x]);
     }
-    return (true);
+    pos_y--;
+    if (track)
+        return (true);
+    return (err("Error\nMap is not close  axe y : "), err(map[pos_y]), track);
 }
 
 bool    direction_x(char **map, int pos_x, int pos_y, int max_x)
@@ -38,10 +35,10 @@ bool    direction_x(char **map, int pos_x, int pos_y, int max_x)
     max_y = size_len(map) - 1;
     i = 0;
     track = true;
-    printf("x %d | y %d \n", pos_x, pos_y);
-    printf("max_x %d | max_y %d \n", max_x, max_y);
+    // printf("x %d | y %d \n", pos_x, pos_y);
+    // printf("max_x %d | max_y %d \n", max_x, max_y);
     if (pos_x == 0 ||  pos_x == max_x || pos_y == 0 || pos_y == max_y)
-        return (err("Error\nMap is not close : "), err(map[pos_y]), false);
+        return (err("Error\nMap is not close axe x : "), err(map[pos_y]), false);
     if (pos_x > 0 && pos_x < max_x && pos_y > 0 && pos_y < max_y)
     {
         pos_x--;
@@ -56,24 +53,27 @@ bool    direction_x(char **map, int pos_x, int pos_y, int max_x)
     }
     if (track)
         return (true);
-    return (err("Error\nMap is not close : "), err(map[pos_y]), track);
+    return (err("Error\nMap is not close axe y : "), err(map[pos_y]), track);
 }
 
 bool    close_by_one(char **map)
 {
-    int y;
-    int x;
-
+    int     y;
+    int     x;
+    bool    m_continue;
     y = 0;
     while (map[y] != NULL)
     {
         x = 0;
         while (map[y][x] != '\0')
         {
-            if (map[y][x] == '0')
+            if (map[y][x] == '0' || looking_for_six("NSWE", map[y][x]) == true)
             {
-                direction_x(map, x, y, ft_strlen(map[y]));                              
-                // direction_y(map, x, y, ft_strlen(map[y]));                              
+                m_continue = direction_x(map, x, y, ft_strlen(map[y]));
+                if (m_continue == true)
+                    m_continue = direction_y(map, x, y, ft_strlen(map[y]));
+                if (!m_continue)
+                    return (m_continue);
             }
             x++;
         }

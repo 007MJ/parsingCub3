@@ -24,7 +24,9 @@ char	*ft_strchr(const char *s, int c);
 
 //pars
 bool    filename(char *file);
-bool    valide(char *file);
+
+// pourrait etre la struct
+char    **valide_map(char *file);
 char    **getfile(char *file);
 bool    pathtexture(char *data);
 bool    wallscolors(char *data);
@@ -34,8 +36,6 @@ bool    close_by_one(char **map);
 bool    looking_for_six(char *s, char x);
 int     size_len(char **map);
 void    err(char *str);
-
-//pars_map
 bool    look_space(char **map);
 bool    six_char_invalide(char  **map);
 

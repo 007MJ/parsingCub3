@@ -39,10 +39,14 @@ char    **getmap(char **file)
     char    **map;
     int     len;
 
-    len = len_map(file);
-    map = malloc (sizeof(char **) * (len + 1));
-    if (!map)
-        return (NULL);
-    map = load_map(file, map);
-    return (map);
+    if (file)
+    {
+        len = len_map(file);
+        map = malloc (sizeof(char **) * (len + 1));
+        if (!map)
+            return (NULL);
+        map = load_map(file, map);
+        return (map);
+    }
+    return (NULL);
 }

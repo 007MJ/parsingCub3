@@ -1,5 +1,20 @@
 #include "../includes/cub3.h"
 
+bool    space_newline(char *s)
+{
+    if (s)
+    {
+        while (*s)
+        {
+            if (*s == '\n' || *s == ' ')
+                s++;
+            else
+                return (false);
+        }
+    }
+    return (true);
+}
+
 int len_remove_newline(char **map)
 {
     int     i;
@@ -11,8 +26,7 @@ int len_remove_newline(char **map)
     len = 0;
     while (map[i])
     {
-        if (map[i][0] != '\n' && newline == true)
-            newline = false;
+        newline = space_newline(map[i]);
         if (newline == false)
             return (i);
         i++;
@@ -42,8 +56,7 @@ int end_remove_newline(char **map)
     len = 0;
     while (i >= 0)
     {
-        if (map[i][0] != '\n' && newline == true)
-            newline = false;
+        newline = space_newline(map[i]);
         if (newline == false)
             return (i);
         i--;
@@ -59,6 +72,8 @@ char    **removenewline(char **map)
     int     end;
     int     r_size;
 
+    if (!map)
+        return (NULL);
     end = end_remove_newline(map);
     start = len_remove_newline(map);
     r_size = (end - start) + 2;

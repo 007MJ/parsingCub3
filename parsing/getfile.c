@@ -8,6 +8,8 @@ char    **read_fd(char *s, int len_map)
 
     i = 0;
     fd = open(s, O_RDONLY);
+    if (len_map <= 0)
+        return (err("Error\nEmpty file\n"), NULL);
     map = malloc((len_map + 1) * sizeof(char **));
     if (!map)
         return (NULL);
