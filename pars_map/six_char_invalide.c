@@ -1,5 +1,8 @@
 #include "../includes/cub3.h"
-
+void    err(char *str)
+{
+    ft_putstr_fd(str, 2);
+}
 bool    looking_for_six(char *s, char x)
 {
     int i;
@@ -28,8 +31,8 @@ bool    six_char_invalide(char  **map)
         x = 0;
         while (map[y][x] != '\0')
         {
-            if (looking_for_six("NSWE10\n", map[y][x]) == false)
-                return (ft_putstr_fd("Error\nInvalide caractere\n", 2),  true);
+            if (looking_for_six("NSWE10 \n", map[y][x]) == false)
+                return (err("Error\nInvalid character : "), err(&map[y][x]), err("\n"), true);
             x++;
         }
         y++;

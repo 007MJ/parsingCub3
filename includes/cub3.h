@@ -33,6 +33,7 @@ char    **removenewline(char **map);
 bool    close_by_one(char **map);
 bool    looking_for_six(char *s, char x);
 int     size_len(char **map);
+void    err(char *str);
 
 //pars_map
 bool    look_space(char **map);
