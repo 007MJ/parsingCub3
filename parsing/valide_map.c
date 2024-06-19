@@ -5,9 +5,9 @@ bool look_inside(char *s, int walls, int texture)
     bool is;
 
     is = false;
-    if (walls == 2 && texture == 3)
+    if (walls == 2 && texture == 4)
         return (true);
-    else if (pathtexture(s) == false && wallscolors(s) == false && (walls < 2|| texture < 3))
+    else if (pathtexture(s) == false && wallscolors(s) == false && (walls != 2|| texture != 4))
     {
         if (s)
         {
@@ -22,6 +22,7 @@ bool look_inside(char *s, int walls, int texture)
     }
     return (true);
 }
+
 bool    last_map(char **map)
 {   
     int     i;
@@ -35,7 +36,7 @@ bool    last_map(char **map)
     track = false;
     while (map[i] != NULL)
     {
-        if (pathtexture(map[i]) == true && texture < 3)
+        if (pathtexture(map[i]) == true && texture <= 3)
             texture++;
         if (wallscolors(map[i]) == true && walls < 2)
             walls++;
@@ -46,12 +47,11 @@ bool    last_map(char **map)
     return (true);
 }
 
-
 bool    error_map(char **map)
 {
+    bool    is_found;
     if (!map)
         return (NULL);
-    bool    is_found;
 
     is_found = false;
     is_found = look_space(map);
@@ -75,11 +75,11 @@ char ** valide_map(char *file)
     // wallscolors(map);
     map = getmap(load_files);
     r_map = removenewline(map);
-    if (r_map)
-    {
-        for (int i = 0; r_map[i]!= NULL; i++)
-            printf("%s", r_map[i]);
-    }
+    // if (r_map)
+    // {
+    //     for (int i = 0; r_map[i]!= NULL; i++)
+    //         printf("%s", r_map[i]);
+    // }
     // if (error_map(r_map))
     //     return (r_map);
     return (NULL);
