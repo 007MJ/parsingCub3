@@ -1,17 +1,23 @@
 #include "../includes/cub3.h"
 
-bool look_inside(char *s, int texture, int walls, bool track)
+bool look_inside(char *s, int walls, int texture)
 {
-    if (!track && (texture != 4 ||  walls != 2))
+    bool is;
+
+    is = false;
+    if (walls == 2 && texture == 3)
+        return (true);
+    else if (pathtexture(s) == false && wallscolors(s) == false && (walls < 2|| texture < 3))
     {
         if (s)
         {
-                while (*s)
-                {
-                    if (*s != '\n' || *s != ' ')
-                        return (err("Error\nData too early in the file\n"), false);
+            while (*s != '\0')
+            {
+                if (*s == '\n' || *s == 32)
                     s++;
-                }
+                else
+                    return (err("Error\nData too early in the file\n"), false);
+            }
         }
     }
     return (true);
@@ -29,17 +35,11 @@ bool    last_map(char **map)
     track = false;
     while (map[i] != NULL)
     {
-        if (pathtexture(map[i]) == true)
-        {
-            track = true;
+        if (pathtexture(map[i]) == true && texture < 3)
             texture++;
-        }
-        if (wallscolors(map[i]) == true)
-        {
-            track = true;
+        if (wallscolors(map[i]) == true && walls < 2)
             walls++;
-        }
-        if (look_inside(map[i], texture, walls, track) == false)
+        if (look_inside(map[i], walls, texture) == false)
             return (false);
         i++;
     }
@@ -69,6 +69,8 @@ char ** valide_map(char *file)
     char    **r_map;
 
     load_files = getfile(file);
+    if (last_map(load_files) == false)
+        return (NULL);
     // pathtexture(map);
     // wallscolors(map);
     map = getmap(load_files);
